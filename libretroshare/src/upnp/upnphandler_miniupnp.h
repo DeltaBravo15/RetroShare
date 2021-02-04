@@ -3,7 +3,7 @@
  *                                                                             *
  * libretroshare: retroshare core library                                      *
  *                                                                             *
- * Copyright 2007-2018 Retroshare Team <retroshare.team@gmail.com>             *
+ * Copyright 2007-2018 Retroshare Team <retroshare.project@gmail.com>          *
  *                                                                             *
  * This program is free software: you can redistribute it and/or modify        *
  * it under the terms of the GNU Lesser General Public License as              *
@@ -19,19 +19,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.       *
  *                                                                             *
  *******************************************************************************/
-//windows/osx (miniupnpc) implementation
-#ifndef _RS_UPNP_IFACE_H
-#define _RS_UPNP_IFACE_H
+#pragma once
 
 #include <string.h>
-
 #include <string>
 #include <map>
 
 /* platform independent networking... */
 #include "pqi/pqinetwork.h"
 #include "pqi/pqiassist.h"
-
+#include "util/rsdebug.h"
 #include "util/rsthreads.h"
 
 class upnpentry
@@ -100,7 +97,7 @@ bool	shutdown_upnp();
 bool initUPnPState();
 bool printUPnPState();
 
-	private:
+private:
 
 bool background_setup_upnp(bool, bool);
 bool checkUPnPActive();
@@ -126,6 +123,5 @@ bool checkUPnPActive();
 	/* active port forwarding */
 	std::list<upnpforward> activeForwards;
 
+	RS_SET_CONTEXT_DEBUG_LEVEL(1)
 };
-
-#endif /* _RS_UPNP_IFACE_H */

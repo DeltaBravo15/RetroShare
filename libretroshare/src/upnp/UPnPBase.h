@@ -1,28 +1,26 @@
-//
-// This file is part of the aMule Project.
-//
-// Copyright (c) 2004-2009 Marcelo Roberto Jimenez ( phoenix@amule.org )
-// Copyright (c) 2006-2009 aMule Team ( admin@amule.org / http://www.amule.org )
-// Copyright (c) 2009-2010 Retroshare Team
-//
-//
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 2 of the License, or
-// (at your option) any later version.
-// You are also granted to use it with the LGPL License
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License or the LGPL
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
-//
-
-//This file uses libupnp
+/*******************************************************************************
+ * libretroshare/src/upnp: UPnPBase.h                                          *
+ *                                                                             *
+ * libretroshare: retroshare core library                                      *
+ *                                                                             *
+ * Copyright (c) 2004-2009 Marcelo Roberto Jimenez ( phoenix@amule.org )       *
+ * Copyright (c) 2006-2009 aMule Team ( admin@amule.org / http://www.amule.org)*
+ * Copyright (c) 2009-2010 Retroshare Team                                     *
+ *                                                                             *
+ * This program is free software: you can redistribute it and/or modify        *
+ * it under the terms of the GNU Lesser General Public License as              *
+ * published by the Free Software Foundation, either version 3 of the          *
+ * License, or (at your option) any later version.                             *
+ *                                                                             *
+ * This program is distributed in the hope that it will be useful,             *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of              *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the                *
+ * GNU Lesser General Public License for more details.                         *
+ *                                                                             *
+ * You should have received a copy of the GNU Lesser General Public License    *
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.       *
+ *                                                                             *
+ *******************************************************************************/
 
 #include <map>
 #include <string>
@@ -45,6 +43,7 @@
 	extern std::string stdEmptyString;
 #endif // UPNP_C
 
+//#define UPNP_DEBUG 1
 
 /**
  * Case insensitive std::string comparison
@@ -115,20 +114,18 @@ public:
 	
 	// Convenience function to avoid repetitive processing of error
 	// messages
-	std::string processUPnPErrorMessage(
-		const std::string &messsage,
-		int code,
-		const DOMString errorString,
-		IXML_Document *doc) const;
+	std::string processUPnPErrorMessage(const std::string &messsage,
+	    int code,
+	    const DOMString errorString,
+	    const IXML_Document* doc) const;
 
 	// Processing response to actions
 	void ProcessActionResponse(
-		IXML_Document *RespDoc,
-		const std::string &actionName) const;
+	        const IXML_Document* RespDoc,
+	        const std::string& actionName ) const;
 	
 	// IXML_Element
-	IXML_Element *Element_GetRootElement(
-		IXML_Document *doc) const;
+	IXML_Element* Element_GetRootElement(const IXML_Document* doc) const;
 	IXML_Element *Element_GetFirstChild(
 		IXML_Element *parent) const;
 	IXML_Element *Element_GetNextSibling(
@@ -259,7 +256,7 @@ private:
 public:
 	CUPnPError(
 		const CUPnPLib &upnpLib,
-		IXML_Document *errorDoc);
+		const IXML_Document *errorDoc);
 	~CUPnPError() {}
 	const std::string &getErrorCode() const
 		{ return m_ErrorCode; }
@@ -599,13 +596,10 @@ public:
 
 	// Callback function
 	static int Callback(
-		Upnp_EventType EventType,
-		void* Event,
-		void* Cookie);
-	void OnEventReceived(
-		const std::string &Sid,
-		int EventKey,
-		IXML_Document *ChangedVariables);
+	        Upnp_EventType EventType, const void* Event, void* Cookie );
+	void OnEventReceived(const std::string &Sid,
+	    int EventKey,
+	    const IXML_Document* ChangedVariables);
 
 private:
 	void AddRootDevice(
